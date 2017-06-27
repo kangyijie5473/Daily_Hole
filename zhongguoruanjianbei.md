@@ -15,6 +15,19 @@ CPU：
 编程语言：Python 2.7
 
 ## 总体设计思路
+
+### Scrapy整体架构  
+![整体架构](http://jason-images.qiniudn.com/@/python/scrapy/intro/scrapy_backbone.png)    
+
+>引擎(Scrapy Engine)，用来处理整个系统的数据流处理，触发事务。
+调度器(Scheduler)，用来接受引擎发过来的请求，压入队列中，并在引擎再次请求的时候返回。
+下载器(Downloader)，用于下载网页内容，并将网页内容返回给蜘蛛。
+蜘蛛(Spiders)，蜘蛛是主要干活的，用它来制订特定域名或网页的解析规则。编写用于分析response并提取item(即获取到的item)或额外跟进的URL的类。 每个spider负责处理一个特定(或一些)网站。
+项目管道(Item Pipeline)，负责处理有蜘蛛从网页中抽取的项目，他的主要任务是清晰、验证和存储数据。当页面被蜘蛛解析后，将被发送到项目管道，并经过几个特定的次序处理数据。
+下载器中间件(Downloader Middlewares)，位于Scrapy引擎和下载器之间的钩子框架，主要是处理Scrapy引擎与下载器之间的请求及响应。
+蜘蛛中间件(Spider Middlewares)，介于Scrapy引擎和蜘蛛之间的钩子框架，主要工作是处理蜘蛛的响应输入和请求输出。
+调度中间件(Scheduler Middlewares)，介于Scrapy引擎和调度之间的中间件，从Scrapy引擎发送到调度的请求和响应。  
+
 ## 团队分工及项目进度 
 
 ### 团队分工
