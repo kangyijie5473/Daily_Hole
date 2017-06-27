@@ -5,7 +5,9 @@
 分布式爬虫，对同一个网站的同类数据，进行结构化。同时，能利用分布式的软件设计方法，实现爬虫的高效采集。  
 
 ## 软件需求分析
-
+1.分布式爬虫 --- 通过分布式调度，提高整体效率，同时保证高可用性，具有一定的容错性、具有自动恢复，备份的功能。  
+2.自动结构化 --- 对于具有相同模板的URL集合，能够自动提取数据。对于包含正文的网页，能够提取正文。  
+3.监控系统 --- 图形化的用户界面，方便用户操作，并且对程序运行中的各项数据进行实时监控和展示。  
 ## 开发环境
 
 内存：4GB  
@@ -14,19 +16,24 @@ CPU：
 操作系统：Linux(Fedora 25)  
 编程语言：Python 2.7
 
-## 总体设计思路
+## 总体设计思路  
 
-### Scrapy整体架构  
-![整体架构](http://jason-images.qiniudn.com/@/python/scrapy/intro/scrapy_backbone.png)    
+针对软件需求中的编程语言限制，结合我们自身的技术水平，我们采用了Python作为开发语言。同时，为了更好的贴近实际生产环境，我们的开发及测试均在Linux操作系统上完成。  
+ 对于Python 网络爬虫，目前效率和功能最完善的便是Scrapy这个爬虫框架，我们使用它作为基础框架，在其上进行有针对性的修改和优化。  
+在分布式调度上，我们由本次项目实际需求出发，同时也对主流的算法理论进行了学习，最终制订了“”“Leader-Worker-Observer算法来进行分布式调度，保证效率和高可用性。  
+在需求中，对于数据存储并没有太多要求，所以我们准备了MySQL和MongoDB两套方案，主要对应了较为通用、需要高度事务性的需求和面向文档存储的需求。同时在缓存系统上，主要采用Redis，一方面Redis丰富的数据结构十分贴合我们的需求，另一方面Redis作为目前最火热的NoSQL，其性能经受考验，并且它的集群解决方案也较为成熟。  
 
->引擎(Scrapy Engine)，用来处理整个系统的数据流处理，触发事务。  
-调度器(Scheduler)，用来接受引擎发过来的请求，压入队列中，并在引擎再次请求的时候返回。  
-下载器(Downloader)，用于下载网页内容，并将网页内容返回给蜘蛛。  
-蜘蛛(Spiders)，蜘蛛是主要干活的，用它来制订特定域名或网页的解析规则。编写用于分析response并提取item(即获取到的item)或额外跟进的URL的类。 每个spider负责处理一个特定(或一些)网站。  
-项目管道(Item Pipeline)，负责处理有蜘蛛从网页中抽取的项目，他的主要任务是清晰、验证和存储数据。当页面被蜘蛛解析后，将被发送到项目管道，并经过几个特定的次序处理数据。  
-下载器中间件(Downloader Middlewares)，位于Scrapy引擎和下载器之间的钩子框架，主要是处理Scrapy引擎与下载器之间的请求及响应。  
-蜘蛛中间件(Spider Middlewares)，介于Scrapy引擎和蜘蛛之间的钩子框架，主要工作是处理蜘蛛的响应输入和请求输出。  
-调度中间件(Scheduler Middlewares)，介于Scrapy引擎和调度之间的中间件，从Scrapy引擎发送到调度的请求和响应。  
+### Scrapy整体架构    
+
+![scrapy](http://img.blog.csdn.net/20170627202026404?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvWGl5b3VMaW51eF9LYW5neWlqaWU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)  
+>1.引擎(Scrapy Engine)，用来处理整个系统的数据流处理，触发事务。  
+2.调度器(Scheduler)，用来接受引擎发过来的请求，压入队列中，并在引擎再次请求的时候返回。  
+3.下载器(Downloader)，用于下载网页内容，并将网页内容返回给蜘蛛。  
+4.蜘蛛(Spiders)，蜘蛛是主要干活的，用它来制订特定域名或网页的解析规则。编写用于分析response并提取item(即获取到的item)或额外跟进的URL的类。 每个spider负责处理一个特定(或一些)网站。  
+5.项目管道(Item Pipeline)，负责处理有蜘蛛从网页中抽取的项目，他的主要任务是清晰、验证和存储数据。当页面被蜘蛛解析后，将被发送到项目管道，并经过几个特定的次序处理数据。  
+6.下载器中间件(Downloader Middlewares)，位于Scrapy引擎和下载器之间的钩子框架，主要是处理Scrapy引擎与下载器之间的请求及响应。  
+7.蜘蛛中间件(Spider Middlewares)，介于Scrapy引擎和蜘蛛之间的钩子框架，主要工作是处理蜘蛛的响应输入和请求输出。  
+8.调度中间件(Scheduler Middlewares)，介于Scrapy引擎和调度之间的中间件，从Scrapy引擎发送到调度的请求和响应。  
 
 ## 团队分工及项目进度 
 
@@ -110,9 +117,6 @@ CPU：
 ![架构图](http://img.blog.csdn.net/20170624150958782?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvWGl5b3VMaW51eF9LYW5neWlqaWU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)  
 
 ## 监控系统设计
-
-## 程序运行流程
-
 ## 测试环境
 1.最小硬件环境  
 内存：1GB  
@@ -130,5 +134,3 @@ CPU：
 1.最小硬件环境
 
 2.普通硬件环境
-##  wenti 
-
