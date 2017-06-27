@@ -25,7 +25,7 @@ CPU：
 
 ### Scrapy整体架构    
 
-![scrapy](http://img.blog.csdn.net/20170627202026404?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvWGl5b3VMaW51eF9LYW5neWlqaWU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)  
+![scrapy](http://on81dxgme.bkt.clouddn.com/scrapy_backbone.png)  
 >1.引擎(Scrapy Engine)，用来处理整个系统的数据流处理，触发事务。  
 2.调度器(Scheduler)，用来接受引擎发过来的请求，压入队列中，并在引擎再次请求的时候返回。  
 3.下载器(Downloader)，用于下载网页内容，并将网页内容返回给蜘蛛。  
