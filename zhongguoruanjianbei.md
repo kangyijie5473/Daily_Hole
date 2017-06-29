@@ -14,7 +14,7 @@
 内存：4GB  
 CPU：  
 磁盘：  
-操作系统：Linux(Fedora 25)  
+操作系统：Linux(Deepin 15.4)  
 编程语言：Python 2.7
 
 ## 总体设计思路  
@@ -116,7 +116,6 @@ CPU：
 
 ![架构图](http://img.blog.csdn.net/20170624150958782?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvWGl5b3VMaW51eF9LYW5neWlqaWU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)  
 
-## 数据库设计  
 
 ## 监控系统设计  
 
@@ -131,14 +130,16 @@ CPU：
 内存：GB  
 CPU：   
 磁盘：  
-操作系统：Linux(Deepin 15)  
+操作系统：Linux(Deepin 15.4)  
 
 ## 测试结果
 
 
 ## 项目数据集测试结果
-6月 官方发布了测试数据集，我们将正文提取之后的结果通过官方评分XX进行了测试。  
+6月 官方发布了测试数据集，我们将正文提取之后的结果通过官方评分jar包进行了测试。  
 结果如下：
 
-
+![start](http://on81dxgme.bkt.clouddn.com/2017-06-28%2020-30-48%20%E7%9A%84%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
+![judge](http://on81dxgme.bkt.clouddn.com/2017-06-28%2020-30-48%20%E7%9A%84%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
+![result](http://on81dxgme.bkt.clouddn.com/2017-06-28%2020-30-18%20%E7%9A%84%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
 
