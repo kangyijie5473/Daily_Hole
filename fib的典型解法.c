@@ -38,12 +38,12 @@ void swap(int *a, int *b)
     *b = temp;
 }
 
-int fib_iteration(int cout,int n, int r1, int r2) // 伪递归，使用迭代的思想来递归 空间 O(n) 时间 O(n)
+int fib_iteration(int cout,int n, int r1, int r2) // 尾递归，使用迭代的思想来递归 空间 O(n) 时间 O(n)
 {
     r1 = r1+ r2;
     swap(&r1,&r2);
     if(cout == n || n == 1)
-        return r1;    //还有一种优化，把这里return 去掉，最终用一个问号表达式，编译器可以优化为空间O(1)，
+        return r1;    //即使不把return写在一起，编译器也可以优化为空间O(1)的尾递归，
     else              //因为编译器不会每次保存函数栈的信息，因为相当于只使用了最后一次的值，每次压栈时直接覆盖。
         return  fib_iteration(cout + 1, n, r1,r2); 
 }
