@@ -12,7 +12,8 @@
 
 #include <stdio.h>
 
-int memory_array[1000];
+/* Answer 1 */
+int res[1000];
 int fib_recursion_memory(int n)                  //带记忆的递归，需要额外开辟的空间大
 {                                                //多次求值有优势
     if(res[n] != 0)                              //时间 O(n)
@@ -23,6 +24,7 @@ int fib_recursion_memory(int n)                  //带记忆的递归，需要�
         return res[n] = fib_recursion_memory(n-1) + fib_recursion_memory(n-2);
 }
 
+/* Answer 2 */
 int fib_recursion(int n)                         // 最简单的递归，当然最慢在 O( 2^(N/2) ) 和 O(2^N) 之间
 {
     if(n == 1 || n == 2){
@@ -31,6 +33,7 @@ int fib_recursion(int n)                         // 最简单的递归，当然�
         return fib_recursion(n-1) +fib_recursion(n-2);
 }
 
+/* Answer 3 */
 void swap(int *a, int *b)
 {
     int temp = *a;
@@ -50,15 +53,17 @@ int fib_iteration(int cout,int n, int r1, int r2) // 尾递归，使用迭代的
 
 int main(void)
 {
+    /* Answer 4 */
+
     int n ;
     scanf("%d",&n);
-    int r1  = 1,r2 = 1;
     
+    int r1  = 1,r2 = 1;  
     for(int i = 2; i <=n; i++){ //循环求解，这种方式求单个fib值 O（n）空间O（1）
         r1 = r1 + r2;
         swap(&r1, &r2);
     }
-    printf("%d\n",fib_recursion(n));
+    
     printf("%d\n",r1);
 
 }
